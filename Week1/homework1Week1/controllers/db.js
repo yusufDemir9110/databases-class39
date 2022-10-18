@@ -5,7 +5,6 @@ const db = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "hyfpassword",
-  database: "meetup",
 });
 
 //connect
@@ -20,13 +19,12 @@ export const createDb = (req, res) => {
   db.query(sql, (error, result) => {
     if (error) throw error;
     res.send("database created...");
-    console.log(result);
   });
 };
 
 //create table
 export const createInviteeTable = (req, res) => {
-  db.config.database = "meetup";
+  db.changeUser({ database: "meetup" });
   let sql =
     "CREATE TABLE invitee(invitee_no int AUTO_INCREMENT, invite_name varchar(128), invited_by varchar(128), PRIMARY KEY(invitee_no))";
   db.query(sql, (error, result) => {
@@ -36,7 +34,7 @@ export const createInviteeTable = (req, res) => {
 };
 
 export const createRoomTable = (req, res) => {
-  db.config.database = "meetup";
+  db.changeUser({ database: "meetup" });
   let sql =
     "CREATE TABLE room(room_no int AUTO_INCREMENT, room_name varchar(128), floor_number int, PRIMARY KEY(room_no))";
   db.query(sql, (error, result) => {
@@ -46,7 +44,7 @@ export const createRoomTable = (req, res) => {
 };
 
 export const createMeetingTable = (req, res) => {
-  db.config.database = "meetup";
+  db.changeUser({ database: "meetup" });
   let sql =
     "CREATE TABLE meeting(meeting_no int AUTO_INCREMENT, meeting_title varchar(256),starting_time time, ending_time time, room_no int, PRIMARY KEY(meeting_no))";
   db.query(sql, (error, result) => {
@@ -57,7 +55,7 @@ export const createMeetingTable = (req, res) => {
 
 //insert
 export const insertInviteeTable = (req, res) => {
-  db.config.database = "meetup";
+  db.changeUser({ database: "meetup" });
   let sql = "INSERT INTO invitee(invite_name, invited_by) VALUES ?";
   let inviteeData = [
     ["invitee one", "John Doe"],
@@ -74,7 +72,7 @@ export const insertInviteeTable = (req, res) => {
 };
 
 export const insertRoomTable = (req, res) => {
-  db.config.database = "meetup";
+  db.changeUser({ database: "meetup" });
   let sql = "INSERT INTO room(room_name,floor_number) VALUES ?";
   let roomData = [
     ["room one", 2],
@@ -91,7 +89,7 @@ export const insertRoomTable = (req, res) => {
 };
 
 export const insertMeetingTable = (req, res) => {
-  db.config.database = "meetup";
+  db.changeUser({ database: "meetup" });
   let sql =
     "INSERT INTO meeting(meeting_title,starting_time,ending_time,room_no) VALUES ?";
   let meetingData = [
