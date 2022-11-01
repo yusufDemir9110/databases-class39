@@ -1,0 +1,80 @@
+1. The groups are repeated, there is no primary key  
+and Mixing data types are used.
+Member_id, member_address, dinner_date, food_code,
+food_description columns are violating 1NF.
+
+2. We can divide this data to 5 tables. 
+
+3.
+
+Members 
++-----------+-------------+----------------+-----------------+
+| member_id | member_name | address_street | address_door_no |
++-----------+-------------+----------------+-----------------+
+| 1         | Amit        | Max Park       | 325             |
+| 2         | Ben         | Hudson Lane    | 24              |
+| 3         | Cristina    | 6th Ave        | 516             |
+| 4         | Dan         | John St        | 89              |
+| 5         | Gabor       | Vivaldi St     | 54              |
+| 6         | Hema        | Peter St       | 9               |
++-----------+-------------+----------------+-----------------+
+
+Venues
++------------+-------------------+
+| venue_code | venue_description |  
++------------+-------------------+
+| B01        | Grand Ball Room   |
+| B02        | Zoku Roof Top     |
+| B03        | Goat Farm         |
+| B04        | Mama's Kitchen    | 
+| B05        | Hungry Hungary    | 
++------------+-------------+-----+
+
+Foods
++-----------+------------------+
+| food_code | food_description |
++-----------+------------------+
+| C1        | Curry            |
+| C2        | Cake             |
+| F1        | Falafal          |
+| G1        | Goulash          |
+| M1        | Mousse           |
+| P1        | Pie              |
+| P2        | Pasca            |
+| S1        | Soup             |
+| T1        | Tea              |
++-----------+------------------+
+
+Venues_foods
+
++-----------------+-------------+------------+
+| venues_foods_id | venue_code  | food_code  | 
++-----------------+-------------+------------+
+| VF01            | B01         | C1         | 
+| VF02            | B01         | C2         | 
+| VF03            | B02         | C2         | 
+| VF04            | B02         | S1         | 
+| VF05            | B03         | P1         | 
+| VF06            | B03         | T1         | 
+| VF07            | B03         | M1         | 
+| VF08            | B04         | F1         | 
+| VF09            | B04         | M1         | 
+| VF10            | B05         | G1         |
+| VF11            | B05         | P2         |
++-----------------+-------------+------------+
+
+
+Dinners
+
++-----------+-------------+---------------+----------------+
+| dinner_id | member_id   | dinner_date   | venue_code     |
++-----------+-------------+---------------+----------------+
+| D00001001 | 1           | 2020-03-15    | B01            |
+| D00001002 | 2           | 2020-03-15    | B02            |
+| D00001003 | 3           | 2020-03-15    | B02            |
+| D00001004 | 4           | 2020-03-20    | B03            |
+| D00001005 | 1           | 2020-03-20    | B03            |
+| D00001006 | 3           | 2020-03-25    | B04            |
+| D00001007 | 5           | 2020-03-26    | B05            |
+| D00001008 | 6           | 2020-04-01    | B03            |
++-----------+-------------+---------------+----------------+
