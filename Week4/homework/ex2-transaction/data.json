@@ -1,0 +1,28 @@
+[
+    {
+        "account_number":101,
+        "balance":2500,
+        "account_changes":[
+            {
+                "change_number":10001,
+                "amount":1000,
+                "change_date":"2022-11-09",
+                "remark":"to a friend"
+            }
+        ]
+
+    },
+    {
+        "account_number":102,
+        "balance":3000,
+        "account_changes":[
+            {
+                "change_number":10002,
+                "amount":1000,
+                "change_date":"2022-11-10",
+                "remark":"to a friend"
+            }
+        ]
+
+    }
+]
