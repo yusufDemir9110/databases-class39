@@ -55,13 +55,7 @@ const totalPopulationPerContinent = async (client, year, age) => {
       },
     },
     {
-      $group: {
-        _id: "$Country",
-        Country: { $first: "$Country" },
-        Year: { $first: year },
-        Age: { $first: age },
-        M: { $first: "$M" },
-        F: { $first: "$F" },
+      $addFields: {
         TotalPopulation: { $sum: { $add: ["$M", "$F"] } },
       },
     },

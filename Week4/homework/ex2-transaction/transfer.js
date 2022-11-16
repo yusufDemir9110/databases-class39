@@ -20,8 +20,8 @@ const main = async () => {
 
 const createMoneyTransfer = async (
   client,
-  receiverAccountNumber,
   senderAccountNumber,
+  receiverAccountNumber,
   amount
 ) => {
   const transferCollection = client.db("databaseWeek4").collection("transfer");
@@ -30,13 +30,46 @@ const createMoneyTransfer = async (
 
   try {
     const transactionResults = await session.withTransaction(async () => {
-      const updateResults = await transferCollection.updateOne(
-        { account_number: receiverAccountNumber },
-        { $addToSet: { balance: balance } },
+      const updateResultsSender = await transferCollection.updateOne(
+        { account_number: senderAccountNumber },
+        {
+          $inc: { balance: amount * -1 },
+          $addToSet: {
+            account_changes: {
+              change_number: 1001,
+              amount: amount * -1,
+              changed_date: "2022-11-16",
+              remark: "from father",
+            },
+          },
+        },
         { session }
       );
-      console.log(`Matched count : ${updateResults.matchedCount}`);
-      console.log(`Modified count : ${updateResults.modifiedCount}`);
+      const updateResultsReceiver = await transferCollection.updateOne(
+        { account_number: receiverAccountNumber },
+        {
+          $inc: { balance: amount * 1 },
+          $addToSet: {
+            account_changes: {
+              change_number: 1002,
+              amount: amount * 1,
+              changed_date: "2022-11-16",
+              remark: "to son",
+            },
+          },
+        },
+        { session }
+      );
+      console.log(`Sender Matched count : ${updateResultsSender.matchedCount}`);
+      console.log(
+        `Sender Modified count : ${updateResultsSender.modifiedCount}`
+      );
+      console.log(
+        `Receiver Matched count : ${updateResultsReceiver.matchedCount}`
+      );
+      console.log(
+        `Receiver Modified count : ${updateResultsReceiver.modifiedCount}`
+      );
     });
     if (transactionResults) {
       console.log("Successfully sent");
@@ -44,6 +77,7 @@ const createMoneyTransfer = async (
       console.log("fail");
     }
   } catch (error) {
+    await session.abortTransaction();
     console.error(error);
   } finally {
     await session.endSession();
