@@ -13,7 +13,7 @@ conn.connect((err) => {
 
 function getPopulation(Country, name, code, cb) {
   conn.query(
-    `SELECT Population FROM ${Country} WHERE Name = '${name}' and code = '${code}'`,
+    `SELECT Population FROM ${Country} WHERE Name = ? and code = ?`,
     function (err, result) {
       if (err) cb(err);
       if (result.length == 0) cb(new Error("Not found"));

@@ -13,7 +13,7 @@ db.connect((err) => {
 
 const createAccountTable = () => {
   let createAccountTableCommand =
-    "create table account(account_number varchar(16), balance float, primary key(account_number))";
+    "create table account(account_number int(32), balance float, primary key(account_number))";
   db.query(createAccountTableCommand, (err, result) => {
     if (err) throw err;
     console.log(result);
